@@ -5,6 +5,7 @@
 ##  集成
 
 ### 在项目中添加安装插件
+
 pubspec.yaml 中添加依赖
  
  ```
@@ -21,12 +22,17 @@ pubspec.yaml 中添加依赖
  
 依赖RangersAppLog并初始化SDK。
  
+ 同时在`Podfile`中添加下面的code，以免`pod install`失败.
+ 
+ 
  ```
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'YourTarget' do
-  pod 'RangersAppLog', '4.0.0'
+pre_install do |installer|
+  # workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
+  Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
 end
+
  ```
 初始化方式请参考[RangersAppLog](https://github.com/bytedance/RangersAppLog)
  
