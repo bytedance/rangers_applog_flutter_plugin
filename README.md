@@ -1,6 +1,6 @@
 # RangersAppLogFlutterPlugin
 
- RangersAppLog的Flutter插件。支持埋点上报。
+ RangersAppLog的[Flutter插件](https://pub.dev/packages/rangers_applog_flutter_plugin)。支持埋点上报。
  
 ##  集成
 
@@ -9,7 +9,7 @@ pubspec.yaml 中添加依赖
  
  ```
  dependencies:
- 	rangers_applog_flutter_plugin:0.0.1
+ 	rangers_applog_flutter_plugin: ^0.0.1
  ```
  
  执行 flutter packages get 命令安装插件
