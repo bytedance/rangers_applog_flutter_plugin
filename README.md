@@ -10,7 +10,7 @@ pubspec.yaml 中添加依赖
  
  ```
  dependencies:
- 	rangers_applog_flutter_plugin: ^0.0.1
+ 	rangers_applog_flutter_plugin: ^1.0.0
  ```
  
  执行 flutter packages get 命令安装插件
