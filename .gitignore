@@ -1,0 +1,82 @@
+# OS X
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Bundler
+.bundle
+
+#flutter 默认 ignore
+.dart_tool/
+
+.packages
+.pub/
+pubspec.lock
+
+build/
+
+
+# CocoaPods
+#
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+#
+Pods/
+*.xcworkspace/contents.xcworkspacedata
+Podfile.lock
+
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+/captures
+
+.idea/
+.vagrant/
+.sconsign.dblite
+.svn/
+
+
+*.swp
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+*.moved-aside
+*.pyc
+*sync/
+Icon?
+.tags*
+
+/Flutter/Generated.xcconfig
+/Flutter/flutter_export_environment.sh
