@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'RangersAppLog','~> 4.0.0'
+  s.dependency 'RangersAppLog','~> 3.2.6'
   s.frameworks = 'Foundation'
   s.requires_arc = true
   s.ios.deployment_target = '8.0'

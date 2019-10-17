@@ -10,7 +10,7 @@ pubspec.yaml 中添加依赖
  
  ```
  dependencies:
- 	rangers_applog_flutter_plugin: ^1.0.0
+ 	rangers_applog_flutter_plugin: ^1.0.1
  ```
  
  执行 flutter packages get 命令安装插件
@@ -22,7 +22,7 @@ pubspec.yaml 中添加依赖
  
 依赖RangersAppLog并初始化SDK。
  
- 同时在`Podfile`中添加下面的code，以免`pod install`失败.
+如果`pod install`失败，在`Podfile`中添加下面的code
  
  
  ```
