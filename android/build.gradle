@@ -32,3 +32,7 @@ android {
         disable 'InvalidPackage'
     }
 }
+
+dependencies {
+    implementation 'com.bytedance.applog:RangersAppLog-Lite-cn:5.3.0'
+}

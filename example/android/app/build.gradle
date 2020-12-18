@@ -39,6 +39,10 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [
+                APPLOG_SCHEME: "rangersapplog.byAx6uYt".toLowerCase()
+        ]
     }
 
     buildTypes {
