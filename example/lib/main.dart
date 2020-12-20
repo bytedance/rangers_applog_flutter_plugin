@@ -159,7 +159,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> _getABTestConfigValueForKey() async {
     String value  = 'Unknown';
     try {
-      final String result = await RangersApplogFlutterPlugin.getABTestConfigValueForKey('ab_config_key');
+      final String result = await RangersApplogFlutterPlugin.getABTestConfigValueForKey('ab_config_key', "");
       value = result;
     } on Exception {
     }

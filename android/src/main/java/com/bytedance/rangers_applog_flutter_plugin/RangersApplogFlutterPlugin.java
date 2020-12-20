@@ -78,7 +78,7 @@ public class RangersApplogFlutterPlugin implements MethodCallHandler {
         result.success(AppLog.getAbSdkVersion());
         break;
       case FlutterPluginMethodGetABTestConfigValueForKey:
-        result.success(AppLog.getAbConfig((String) call.argument("key"), ""));
+        result.success(AppLog.getAbConfig((String) call.argument("key"), call.argument("default")));
         break;
       case FlutterPluginMethodOnEventV3:
         String eventName = (String) call.argument("event");
