@@ -74,7 +74,7 @@ static inline id setNSNullToNil(id value, Class target){
         result(nil);
     }
     else if ([methodName isEqualToString:@"onEventV3"]) {
-        NSLog(@"%@", call.arguments);
+        // NSLog(@"%@", call.arguments);
         NSString *event = setNSNullToNil([arguments valueForKey:@"event"], [NSString class]);
         NSDictionary *param = [arguments valueForKey:@"param"];
         BOOL ret = [track eventV3:event params:param];
