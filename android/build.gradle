@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.bytedance.applog:RangersAppLog-Lite-cn:5.3.0'
+    implementation 'com.bytedance.applog:RangersAppLog-Lite-cn:5.4.2'
 }

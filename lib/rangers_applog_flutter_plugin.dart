@@ -52,8 +52,8 @@ class RangersApplogFlutterPlugin {
   /// @returns 对应abConfigValue
   /// 使用示例：
   /// String value = await FlutterRangersAppLog.getABTestConfigValueForKey('ab_test_key');
-  static Future<String> getABTestConfigValueForKey(String key) async {
-    return await _channel.invokeMethod('getABTestConfigValueForKey', {'key':key});
+  static Future<String> getABTestConfigValueForKey(String key, dynamic defaultValue) async {
+    return await _channel.invokeMethod('getABTestConfigValueForKey', {'key':key, 'default':defaultValue});
   }
 
   /// v3埋点上报

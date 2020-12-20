@@ -102,7 +102,8 @@ static inline id setNSNullToNil(id value, Class target){
     }
     else if ([methodName isEqualToString:@"getABTestConfigValueForKey"]) {
         NSString *key = setNSNullToNil([arguments valueForKey:@"key"], [NSString class]);
-        id val = [track ABTestConfigValueForKey:key defaultValue:nil];
+        NSObject *defaultVal = setNSNullToNil([arguments valueForKey:@"default"], [NSObject class]);
+        id val = [track ABTestConfigValueForKey:key defaultValue:defaultVal];
         result(val);
     }
     else {
