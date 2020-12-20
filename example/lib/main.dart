@@ -29,69 +29,71 @@ class _MyAppState extends State<MyApp> {
 
   final TextEditingController _appid_controller = new TextEditingController();
   final TextEditingController _channel_controller = new TextEditingController();
-  final TextEditingController _enable_log_controller = new TextEditingController();
-  final TextEditingController _enable_ab_controller = new TextEditingController();
-  final TextEditingController _report_url_controller = new TextEditingController();
+  final TextEditingController _enable_log_controller =
+      new TextEditingController();
+  final TextEditingController _enable_ab_controller =
+      new TextEditingController();
+  final TextEditingController _report_url_controller =
+      new TextEditingController();
 
   Future<void> _getDid() async {
-    String value  = 'Unknown';
+    String value = 'Unknown';
     try {
-      final String result = await RangersApplogFlutterPlugin.byteDanceDeviceID(RangersAppLogTestAppID);
+      final String result = await RangersApplogFlutterPlugin.getDeviceId();
       value = result;
-    } on Exception {
-    }
+    } on Exception {}
     setState(() {
       _did = value;
     });
   }
 
-  Future<void> _getIid() async {
-    String value  = 'Unknown';
-    try {
-      final String result = await RangersApplogFlutterPlugin.byteDanceInstallID(RangersAppLogTestAppID);
-      value = result;
-    } on Exception {
-    }
-    setState(() {
-      _iid = value;
-    });
-  }
+  // Future<void> _getIid() async {
+  //   String value  = 'Unknown';
+  //   try {
+  //     final String result = await RangersApplogFlutterPlugin.byteDanceInstallID(RangersAppLogTestAppID);
+  //     value = result;
+  //   } on Exception {
+  //   }
+  //   setState(() {
+  //     _iid = value;
+  //   });
+  // }
 
-  Future<void> _getSSID() async {
-    String value  = 'Unknown';
-    try {
-      final String result = await RangersApplogFlutterPlugin.byteDanceSSID(RangersAppLogTestAppID);
-      value = result;
-    } on Exception {
-    }
-    setState(() {
-      _ssid = value;
-    });
-  }
+  // Future<void> _getSSID() async {
+  //   String value  = 'Unknown';
+  //   try {
+  //     final String result = await RangersApplogFlutterPlugin.byteDanceSSID(RangersAppLogTestAppID);
+  //     value = result;
+  //   } on Exception {
+  //   }
+  //   setState(() {
+  //     _ssid = value;
+  //   });
+  // }
 
-  Future<void> _getUUID() async {
-    String value  = 'Unknown';
-    try {
-      final String result = await RangersApplogFlutterPlugin.userUniqueID(RangersAppLogTestAppID);
-      value = result;
-    } on Exception {
-    }
-    setState(() {
-      _uuid = value;
-    });
-  }
+  // Future<void> _getUUID() async {
+  //   String value  = 'Unknown';
+  //   try {
+  //     final String result = await RangersApplogFlutterPlugin.userUniqueID(RangersAppLogTestAppID);
+  //     value = result;
+  //   } on Exception {
+  //   }
+  //   setState(() {
+  //     _uuid = value;
+  //   });
+  // }
 
-  Future<void> _getABTestValue() async {
-    String value  = 'Unknown';
-    try {
-      final String result = await RangersApplogFlutterPlugin.abTestValue(RangersAppLogTestAppID,"experiment-no2");
-      value = result;
-    } on Exception {
-    }
-    setState(() {
-      _abValue = value;
-    });
-  }
+  // Future<void> _getABTestValue() async {
+  //   String value  = 'Unknown';
+  //   try {
+  //     final String result = await RangersApplogFlutterPlugin.abTestValue(RangersAppLogTestAppID,"experiment-no2");
+  //     value = result;
+  //   } on Exception {
+  //   }
+  //   setState(() {
+  //     _abValue = value;
+  //   });
+  // }
 
   @override
   void initState() {
@@ -108,8 +110,9 @@ class _MyAppState extends State<MyApp> {
   Future<void> initSDKState() async {
     String value;
     try {
-      RangersApplogFlutterPlugin.startTrack(RangersAppLogTestAppID, "dp_tob_sdk_test2");
-      value = await RangersApplogFlutterPlugin.sdkVersion;
+      RangersApplogFlutterPlugin.initRangersAppLog(
+          RangersAppLogTestAppID, "dp_tob_sdk_test2");
+      // value = await RangersApplogFlutterPlugin.sdkVersion;
     } on PlatformException {
       value = 'Failed to get sdk version.';
     }
@@ -120,11 +123,11 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     _timer = new Timer(const Duration(milliseconds: 400), () {
-      _getUUID();
+      // _getUUID();
       _getDid();
-      _getSSID();
-      _getIid();
-      _getABTestValue();
+      // _getSSID();
+      // _getIid();
+      // _getABTestValue();
     });
 
     setState(() {
@@ -133,41 +136,41 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _getDeviceID() async {
-    String value  = 'Unknown';
+    String value = 'Unknown';
     try {
       final String result = await RangersApplogFlutterPlugin.getDeviceId();
       value = result;
-    } on Exception {
-    }
+    } on Exception {}
     setState(() {
       _device_id = value;
     });
   }
 
   Future<void> _getAbSdkVersion() async {
-    String value  = 'Unknown';
+    String value = 'Unknown';
     try {
       final String result = await RangersApplogFlutterPlugin.getAbSdkVersion();
       value = result;
-    } on Exception {
-    }
+    } on Exception {}
     setState(() {
       _ab_sdk_version = value;
     });
   }
 
   Future<void> _getABTestConfigValueForKey() async {
-    String value  = 'Unknown';
+    String value = 'Unknown';
     try {
-      final String result = await RangersApplogFlutterPlugin.getABTestConfigValueForKey('ab_config_key');
+      final String result =
+          await RangersApplogFlutterPlugin.getABTestConfigValueForKey(
+              'ab_config_key');
       value = result;
-    } on Exception {
-    }
+    } on Exception {}
     setState(() {
       _ab_config_value = value;
     });
   }
 
+  static int uuid = 2020;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -211,19 +214,30 @@ class _MyAppState extends State<MyApp> {
                   title: Text("Test init rangers applog"),
                   onTap: () {
                     try {
-                      RangersApplogFlutterPlugin.enableDebugLog = int.parse(_enable_log_controller.text) > 0 ? true : false;
-                    } on FormatException {
-                    }
+                      RangersApplogFlutterPlugin.enableDebugLog =
+                          int.parse(_enable_log_controller.text) > 0
+                              ? true
+                              : false;
+                    } on FormatException {}
                     try {
-                      RangersApplogFlutterPlugin.enableAb = int.parse(_enable_ab_controller.text) > 0 ? true : false;
-                    } on FormatException {
-                    }
-                    RangersApplogFlutterPlugin.reportUrl = _report_url_controller.text;
+                      RangersApplogFlutterPlugin.enableAb =
+                          int.parse(_enable_ab_controller.text) > 0
+                              ? true
+                              : false;
+                    } on FormatException {}
+                    RangersApplogFlutterPlugin.reportUrl =
+                        _report_url_controller.text;
                     String appIdText = _appid_controller.text;
                     String channelText = _channel_controller.text;
-                    String appid = appIdText != null && appIdText.isNotEmpty ? appIdText : RangersAppLogTestAppID;
-                    String channel = channelText != null && channelText.isNotEmpty ? channelText : RangersAppLogTestChannel;
-                    RangersApplogFlutterPlugin.initRangersAppLog(appid, channel);
+                    String appid = appIdText != null && appIdText.isNotEmpty
+                        ? appIdText
+                        : RangersAppLogTestAppID;
+                    String channel =
+                        channelText != null && channelText.isNotEmpty
+                            ? channelText
+                            : RangersAppLogTestChannel;
+                    RangersApplogFlutterPlugin.initRangersAppLog(
+                        appid, channel);
                   }),
               ListTile(
                   title: Text("Test get device_id $_device_id"),
@@ -243,79 +257,63 @@ class _MyAppState extends State<MyApp> {
               ListTile(
                   title: Text("Test onEventV3"),
                   onTap: () {
-                    RangersApplogFlutterPlugin.onEventV3("event_v3_name", {"key1":"value1","key2":"value2"});
+                    RangersApplogFlutterPlugin.onEventV3(
+                        "event_v3_name", {"key1": "value1", "key2": "value2"});
                   }),
               ListTile(
                   title: Text("Test setHeaderInfo"),
                   onTap: () {
-                    RangersApplogFlutterPlugin.setHeaderInfo({"header_key1":"header_value1","header_key2":"header_value2"});
+                    RangersApplogFlutterPlugin.setHeaderInfo({
+                      "header_key1": "header_value1",
+                      "header_key2": "header_value2",
+                      // "header_key3": Null  // Invalid argument: Null
+                    });
                   }),
               ListTile(
                   title: Text("Test setUserUniqueId"),
                   onTap: () {
-                    RangersApplogFlutterPlugin.setUserUniqueId("135246");
+                    RangersApplogFlutterPlugin.setUserUniqueId(uuid.toString());
+                    uuid++;
                   }),
-              ListTile(
-                  title: Text("RangersApplog SDK Version $_sdkVersion")
-              ),
+              ListTile(title: Text("RangersApplog SDK Version $_sdkVersion")),
               ListTile(
                   title: Text("Test start Track "),
                   onTap: () {
-                    RangersApplogFlutterPlugin.startTrack(RangersAppLogTestAppID, "dp_tob_sdk_test2");
+                    // RangersApplogFlutterPlugin.startTrack(RangersAppLogTestAppID, "dp_tob_sdk_test2");
                   }),
               ListTile(
                   title: Text("Test call did $_did "),
                   onTap: () {
-                     _getDid();
+                    _getDid();
                   }),
-              ListTile(
-                  title: Text("Test call ssid $_ssid "),
-                  onTap: () {
-                    _getSSID();
-                  }),
-              ListTile(
-                  title: Text("Test call iid $_iid "),
-                  onTap: () {
-                    _getIid();
-                  }),
-              ListTile(
-                  title: Text("Test call uuid $_uuid "),
-                  onTap: () {
-                    _getUUID();
-                  }),
-              ListTile(
-                  title: Text("Test login "),
-                  onTap: () {
-                    RangersApplogFlutterPlugin.login(RangersAppLogTestAppID, "1234");
-                  }),
-              ListTile(
-                  title: Text("Test logout "),
-                  onTap: () {
-                    RangersApplogFlutterPlugin.logout(RangersAppLogTestAppID);
-                  }),
+              // ListTile(
+              //     title: Text("Test call ssid $_ssid "),
+              //     onTap: () {
+              //       _getSSID();
+              //     }),
+              // ListTile(
+              //     title: Text("Test call iid $_iid "),
+              //     onTap: () {
+              //       _getIid();
+              //     }),
+              // ListTile(
+              //     title: Text("Test call uuid $_uuid "),
+              //     onTap: () {
+              //       _getUUID();
+              //     }),
               ListTile(
                   title: Text("Test call eventV3 "),
                   onTap: () {
-                    RangersApplogFlutterPlugin.eventV3(RangersAppLogTestAppID, "test_event", {"key":"value"});
+                    RangersApplogFlutterPlugin.onEventV3(
+                        "test_event", {"key": "value"});
                   }),
-              ListTile(
-                  title: Text("Test call abTestValue $_abValue "),
-                  onTap: () {
-                    _getABTestValue();
-                  }),
-              ListTile(
-                  title: Text("Test set ABSDKVersion "),
-                  onTap: () {
-                    RangersApplogFlutterPlugin.abSDKVersion(RangersAppLogTestAppID, "10086");
-                  }),
-              ListTile(
-                  title: Text("Test active user "),
-                  onTap: () {
-                    RangersApplogFlutterPlugin.activeUser(RangersAppLogTestAppID);
-                  }),
+              // ListTile(
+              //     title: Text("Test call abTestValue $_abValue "),
+              //     onTap: () {
+              //       _getABTestValue();
+              //     }),
             ],
-          )
-      ),
+          )),
     );
   }
 }

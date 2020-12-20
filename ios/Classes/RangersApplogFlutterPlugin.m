@@ -6,43 +6,29 @@
 //
 
 #import "RangersApplogFlutterPlugin.h"
-#import <RangersAppLog/BDAutoTrack.h>
+#import <RangersAppLog/RangersAppLog.h>
 
-static NSString * const FlutterPluginMethodStartTrack           = @"startTrack";
-static NSString * const FlutterPluginMethodSDKVersion           = @"sdkVersion";
-static NSString * const FlutterPluginMethodDeviceID             = @"byteDanceDeviceID";
-static NSString * const FlutterPluginMethodInstallID            = @"byteDanceInstallID";
-static NSString * const FlutterPluginMethodSSID                 = @"byteDanceSSID";
-static NSString * const FlutterPluginMethodUUID                 = @"userUniqueID";
 
-static NSString * const FlutterPluginMethodLogin                = @"login";
-static NSString * const FlutterPluginMethodLogout               = @"logout";
-static NSString * const FlutterPluginMethodEventV3              = @"eventV3";
-static NSString * const FlutterPluginMethodABTestValue          = @"abTestValue";
-
-static NSString * const FlutterPluginMethodABSDKVersion         = @"abSDKVersion";
-static NSString * const FlutterPluginMethodActiveUser           = @"activeUser";
-static NSString * const FlutterPluginMethodTrackUIEvent         = @"trackUIEvent";
-
-static inline id applog_fliterNSNull(id value, Class target){
+static inline id setNSNullToNil(id value, Class target){
     if (value == NSNull.null) {
         return nil;
     }
-
     if (![value isKindOfClass:target]) {
         return nil;
     }
-
     return value;
 }
 
-@interface RangersApplogFlutterPlugin ()
+@interface RangersApplogFlutterPlugin () {
+    BDAutoTrack *track;
+}
 
 @end
 
 
 @implementation RangersApplogFlutterPlugin
 
+// 在应用didFinishLaunching时被调用
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel methodChannelWithName:@"rangers_applog_flutter_plugin"
                                                                 binaryMessenger:[registrar messenger]];
@@ -52,118 +38,76 @@ static inline id applog_fliterNSNull(id value, Class target){
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    NSString *method = call.method;
-    if ([method isEqualToString:FlutterPluginMethodSDKVersion]) {
+    NSString *methodName = call.method;
+    NSDictionary *arguments = setNSNullToNil(call.arguments, [NSDictionary class]);
+    
+    if ([methodName isEqualToString:@"sdkVersion"]) {
         result([BDAutoTrack sdkVersion]);
-        return;
     }
-
-    NSArray *arguments = applog_fliterNSNull(call.arguments, [NSArray class]);
-    NSString *appID = applog_fliterNSNull(arguments.firstObject, [NSString class]);
-    if ([appID length] < 1 || arguments.count < 1) {
+    else if ([methodName isEqualToString:@"initRangersAppLog"]) {
+        NSString *appID = setNSNullToNil([arguments valueForKey:@"appid"], [NSString class]);
+        NSString *channel = setNSNullToNil([arguments valueForKey:@"channel"], [NSString class]);
+        NSNumber *enableAB = setNSNullToNil([arguments valueForKey:@"enableAb"], [NSNumber class]);
+        NSNumber *enableDebugLog = setNSNullToNil([arguments valueForKey:@"enableLog"], [NSNumber class]);
+        NSString *reportUrl = setNSNullToNil([arguments valueForKey:@"reportUrl"], [NSString class]);
+        
+        BDAutoTrackConfig *config = [BDAutoTrackConfig configWithAppID:appID];
+        if ([channel isKindOfClass:NSString.class] && channel.length > 0) {
+            config.channel = channel;
+        }
+        config.abEnable = [enableAB boolValue];
+        config.showDebugLog = [enableDebugLog boolValue];
+        config.serviceVendor = BDAutoTrackServiceVendorCN;
+#if DEBUG
+        config.showDebugLog = YES;
+        config.logger = ^(NSString * log) {
+            NSLog(@"flutter-plugin applog %@",log);
+        };
+#endif
+        track = [BDAutoTrack trackWithConfig:config];
+        if ([reportUrl isKindOfClass:NSString.class] && reportUrl.length > 0) {
+            [track setRequestHostBlock:^NSString * _Nullable(BDAutoTrackServiceVendor vendor, BDAutoTrackRequestURLType requestURLType) {
+                return reportUrl;
+            }];
+        }
+        [track startTrack];
         result(nil);
-        return;
     }
-
-    if ([method isEqualToString:FlutterPluginMethodStartTrack]) {
-        [self startTrackWithAppID:appID arguments:arguments];
+    else if ([methodName isEqualToString:@"onEventV3"]) {
+        NSLog(@"%@", call.arguments);
+        NSString *event = setNSNullToNil([arguments valueForKey:@"event"], [NSString class]);
+        NSDictionary *param = [arguments valueForKey:@"param"];
+        BOOL ret = [track eventV3:event params:param];
         result(nil);
-        return;
     }
-
-    BDAutoTrack *track = [BDAutoTrack trackWithAppID:appID];
-    if (!track) {
-        result(nil);
-        return;
+    else if ([methodName isEqualToString:@"setHeaderInfo"]) {
+        NSDictionary *customHeader = setNSNullToNil([arguments valueForKey:@"customHeader"], [NSDictionary class]);
+        for (NSString *key in customHeader) {
+            if ([key isKindOfClass:NSString.class]) {
+                NSObject *val = customHeader[key];
+                [track setCustomHeaderValue:val forKey:key];
+            }
+        }
     }
-
-    if ([method isEqualToString:FlutterPluginMethodDeviceID]) {
-        result(track.byteDanceDeviceID);
-        return;
+    else if ([methodName isEqualToString:@"setUserUniqueId"]) {
+        NSString *userUniqueID = setNSNullToNil([arguments valueForKey:@"uuid"], [NSString class]);
+        [track setCurrentUserUniqueID:userUniqueID];
     }
-
-    if ([method isEqualToString:FlutterPluginMethodInstallID]) {
-        result(track.installID);
-        return;
+    else if ([methodName isEqualToString:@"getDeviceId"]) {
+        result(track.rangersDeviceID);
     }
-
-    if ([method isEqualToString:FlutterPluginMethodSSID]) {
-        result(track.ssID);
-        return;
+    else if ([methodName isEqualToString:@"getAbSdkVersion"]) {
+        NSString *vids = [track allAbVids];
+        result(vids);
     }
-
-    if ([method isEqualToString:FlutterPluginMethodUUID]) {
-        result(track.userUniqueID);
-        return;
+    else if ([methodName isEqualToString:@"getABTestConfigValueForKey"]) {
+        NSString *key = setNSNullToNil([arguments valueForKey:@"key"], [NSString class]);
+        id val = [track ABTestConfigValueForKey:key defaultValue:nil];
+        result(val);
     }
-
-    if ([method isEqualToString:FlutterPluginMethodLogout]) {
-        [track clearUserUniqueID];
-        result(nil);
-        return;
+    else {
+        result(FlutterMethodNotImplemented);
     }
-
-    if ([method isEqualToString:FlutterPluginMethodLogin]) {
-        NSString *uuid = applog_fliterNSNull([arguments objectAtIndex:1], [NSString class]);
-        [track setCurrentUserUniqueID:uuid];
-        result(nil);
-        return;
-    }
-
-    /// TODO diff UIEvent
-    if ([method isEqualToString:FlutterPluginMethodEventV3]
-        || [method isEqualToString:FlutterPluginMethodTrackUIEvent]) {
-        NSString *event = applog_fliterNSNull([arguments objectAtIndex:1], [NSString class]);
-        NSDictionary *param = applog_fliterNSNull([arguments objectAtIndex:2], [NSDictionary class]);
-        [track eventV3:event params:param];
-        result(nil);
-        return;
-    }
-
-    if ([method isEqualToString:FlutterPluginMethodABSDKVersion]) {
-        NSString *abSDKVersion = applog_fliterNSNull([arguments objectAtIndex:1], [NSString class]);
-        [track setABSDKVersions:abSDKVersion];
-        result(nil);
-        return;
-    }
-
-    if ([method isEqualToString:FlutterPluginMethodABTestValue]) {
-        NSString *key = applog_fliterNSNull([arguments objectAtIndex:1], [NSString class]);
-        id value = [track ABTestConfigValueForKey:key defaultValue:nil];
-        result(value);
-        return;
-    }
-
-    if ([method isEqualToString:FlutterPluginMethodActiveUser]) {
-        [track activeUser];
-        result(nil);
-        return;
-    }
-}
-
-- (void)startTrackWithAppID:(NSString *)appID arguments:(NSArray *)arguments {
-    BDAutoTrackConfig *config = [BDAutoTrackConfig new];
-    config.appID = appID;
-    config.appName = applog_fliterNSNull([arguments objectAtIndex:1], [NSString class]);
-    config.channel = applog_fliterNSNull([arguments objectAtIndex:2], [NSString class]);
-    NSString *vendor = applog_fliterNSNull([arguments objectAtIndex:3], [NSString class]);
-    BDAutoTrackServiceVendor serviceVendor =  BDAutoTrackServiceVendorCN;
-    if ([vendor isEqualToString:@"SG"]) {
-        serviceVendor =  BDAutoTrackServiceVendorSG;
-    } else if ([vendor isEqualToString:@"VA"]) {
-        serviceVendor =  BDAutoTrackServiceVendorVA;
-    }
-    config.serviceVendor = serviceVendor;
-    #if DEBUG
-    config.showDebugLog = YES;
-    config.logger = ^(NSString * log) {
-        NSLog(@"flutter-plugin applog %@",log);
-    };
-    #endif
-    BDAutoTrack *track = [BDAutoTrack trackWithConfig:config];
-
-
-    [track startTrack];
 }
 
 @end
