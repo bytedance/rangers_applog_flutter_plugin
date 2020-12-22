@@ -18,7 +18,9 @@ class RangersApplogFlutterPlugin {
   /// @param channel  String 分发渠道. 一般iOS和安卓的channel是不同的。iOS一般为App Store。
   /// 使用示例：
   /// FlutterRangersAppLog.initRangersAppLog('159486','App Store');
-  /// 推荐在native端初始化SDK，这样可以采集到更多的信息，而不是Flutter启动后才初始化SDK
+  /// 推荐在native端初始化SDK，这样可以采集到更多的信息，而不是Flutter启动后才初始化SDK。
+  /// 注意！如果在native端初始化SDK，则不要再调用此处的接口。以免重复初始化造成问题！
+  /// 将来插件可能下掉此接口，统一在native端初始化。
   static void initRangersAppLog(String appid, String channel) {
     assert(appid != null && appid.isNotEmpty);
     assert(channel != null && channel.isNotEmpty);

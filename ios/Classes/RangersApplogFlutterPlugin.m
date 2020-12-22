@@ -19,9 +19,7 @@ static inline id setNSNullToNil(id value, Class target){
     return value;
 }
 
-@interface RangersApplogFlutterPlugin () {
-    BDAutoTrack *track;
-}
+@interface RangersApplogFlutterPlugin ()
 
 @end
 
@@ -64,20 +62,19 @@ static inline id setNSNullToNil(id value, Class target){
             NSLog(@"flutter-plugin applog %@",log);
         };
 #endif
-        track = [BDAutoTrack trackWithConfig:config];
         if ([reportUrl isKindOfClass:NSString.class] && reportUrl.length > 0) {
-            [track setRequestHostBlock:^NSString * _Nullable(BDAutoTrackServiceVendor vendor, BDAutoTrackRequestURLType requestURLType) {
+            [BDAutoTrack setRequestHostBlock:^NSString * _Nullable(BDAutoTrackServiceVendor vendor, BDAutoTrackRequestURLType requestURLType) {
                 return reportUrl;
             }];
         }
-        [track startTrack];
+        [BDAutoTrack startTrackWithConfig:config];
         result(nil);
     }
     else if ([methodName isEqualToString:@"onEventV3"]) {
         // NSLog(@"%@", call.arguments);
         NSString *event = setNSNullToNil([arguments valueForKey:@"event"], [NSString class]);
         NSDictionary *param = [arguments valueForKey:@"param"];
-        BOOL ret = [track eventV3:event params:param];
+        BOOL ret = [BDAutoTrack eventV3:event params:param];
         result(nil);
     }
     else if ([methodName isEqualToString:@"setHeaderInfo"]) {
@@ -85,25 +82,25 @@ static inline id setNSNullToNil(id value, Class target){
         for (NSString *key in customHeader) {
             if ([key isKindOfClass:NSString.class]) {
                 NSObject *val = customHeader[key];
-                [track setCustomHeaderValue:val forKey:key];
+                [BDAutoTrack setCustomHeaderValue:val forKey:key];
             }
         }
     }
     else if ([methodName isEqualToString:@"setUserUniqueId"]) {
         NSString *userUniqueID = setNSNullToNil([arguments valueForKey:@"uuid"], [NSString class]);
-        [track setCurrentUserUniqueID:userUniqueID];
+        [BDAutoTrack setCurrentUserUniqueID:userUniqueID];
     }
     else if ([methodName isEqualToString:@"getDeviceId"]) {
-        result(track.rangersDeviceID);
+        result([BDAutoTrack rangersDeviceID]);
     }
     else if ([methodName isEqualToString:@"getAbSdkVersion"]) {
-        NSString *vids = [track allAbVids];
+        NSString *vids = [BDAutoTrack allAbVids];
         result(vids);
     }
     else if ([methodName isEqualToString:@"getABTestConfigValueForKey"]) {
         NSString *key = setNSNullToNil([arguments valueForKey:@"key"], [NSString class]);
         NSObject *defaultVal = setNSNullToNil([arguments valueForKey:@"default"], [NSObject class]);
-        id val = [track ABTestConfigValueForKey:key defaultValue:defaultVal];
+        id val = [BDAutoTrack ABTestConfigValueForKey:key defaultValue:defaultVal];
         result(val);
     }
     else {
