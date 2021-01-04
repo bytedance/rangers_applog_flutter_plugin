@@ -39,7 +39,7 @@ source 'https://github.com/bytedance/cocoapods_sdk_source_repo.git'
 ```
 
 ### Android 端
-
+需要在android原生工程集成依赖并初始化RangersAppLog，请参考[RangersAppLog Android](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=10942)
 
   
 ### Flutter 中使用插件 
