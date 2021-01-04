@@ -1,3 +1,11 @@
+## 1.0.3
+
+* Android: 插件改为compileOnly依赖原生RangersAppLog，需要在原生android工程implementation依赖。
+* Android: 插件移除初始化接口，需要在原生android工程初始化RangersAppLog。
+* iOS：插件本身不依赖 RangersAppLog。需要在ios工程中依赖。
+* iOS：插件不提供初始化接口。需要在原生`- [AppDeleate (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions]`中初始化。
+
 ## 1.0.2
 
 * 支持android
