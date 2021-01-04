@@ -18,11 +18,15 @@ dependencies:
 
 ### iOS 端
 #### Podfile
-如果`pod install`失败，在`Podfile`中添加下面的code
+在`Podfile`第一行添加
 ```
 source 'https://github.com/bytedance/cocoapods_sdk_source_repo.git'
 ```
-初始化方式请参考[RangersAppLog](https://github.com/bytedance/RangersAppLog)
+并依赖RangersAppLog. 具体可参考Example或[iOS集成文档](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=8547)
+
+#### 初始化
+需要在原生`- [AppDeleate (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions]`中初始化。
+初始化方式请参考Example或[iOS集成文档](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=8547)
  
 #### 注册插件
 ```objective-c
