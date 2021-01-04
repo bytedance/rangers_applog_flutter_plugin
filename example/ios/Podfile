@@ -1,4 +1,4 @@
-# Uncomment this line to define a global platform for your project
+# 1. 注意要引入spec
 source 'https://github.com/bytedance/cocoapods_sdk_source_repo.git'
 platform :ios, '9.0'
 
@@ -30,6 +30,10 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  
+  # 2. 参考以下的写法，在ios工程的Podfile中依赖RangersAppLog
+  pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/CN']  # 中国区上报
+  # pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/SG']  # report to SG
 end
 
 post_install do |installer|
