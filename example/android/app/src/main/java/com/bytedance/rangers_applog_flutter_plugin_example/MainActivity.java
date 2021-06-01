@@ -14,10 +14,10 @@ public class MainActivity extends FlutterActivity {
     super.onCreate(savedInstanceState);
     GeneratedPluginRegistrant.registerWith(this);
 
-    InitConfig initConfig = new InitConfig("159486", "local_test");
-    initConfig.setAutoStart(true);
-    initConfig.setAbEnable(true);
-    initConfig.setLogger((s, throwable) -> android.util.Log.d("AppLog", s, throwable));
-    AppLog.init(this, initConfig);
+//    InitConfig initConfig = new InitConfig("159486", "local_test");
+//    initConfig.setAutoStart(true);
+//    initConfig.setAbEnable(true);
+//    initConfig.setLogger((s, throwable) -> android.util.Log.d("AppLog", s, throwable));
+//    AppLog.init(this, initConfig);
   }
 }
