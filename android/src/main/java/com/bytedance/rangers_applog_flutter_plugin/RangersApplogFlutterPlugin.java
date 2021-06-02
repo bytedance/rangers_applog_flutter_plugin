@@ -34,6 +34,12 @@ public class RangersApplogFlutterPlugin implements MethodCallHandler {
     private static final String FlutterPluginMethodOnEventV3 = "onEventV3";
     private static final String FlutterPluginMethodSetUserUniqueId = "setUserUniqueId";
     private static final String FlutterPluginMethodSetHeaderInfo = "setHeaderInfo";
+    private static final String FlutterPluginMethodProfileSet = "profileSet";
+    private static final String FlutterPluginMethodProfileSetOnce = "profileSetOnce";
+    private static final String FlutterPluginMethodProfileAppend = "profileAppend";
+    private static final String FlutterPluginMethodProfileIncrement = "profileIncrement";
+    private static final String FlutterPluginMethodProfileUnset = "profileUnSet";
+    private static final String FlutterPluginMethodGetAllAbTestConfig = "getAllAbTestConfig";
 
     private Activity activity;
 
@@ -90,15 +96,7 @@ public class RangersApplogFlutterPlugin implements MethodCallHandler {
                 break;
             case FlutterPluginMethodOnEventV3:
                 String eventName = (String) call.argument("event");
-                HashMap<String, Object> paramMap = (HashMap<String, Object>) call.argument("param");
-                JSONObject paramJson = new JSONObject();
-                for (Map.Entry<String, Object> entry : paramMap.entrySet()) {
-                    try {
-                        paramJson.put(entry.getKey(), entry.getValue());
-                    } catch (JSONException e) {
-                    }
-                }
-                AppLog.onEventV3(eventName, paramJson);
+                AppLog.onEventV3(eventName, getJsonFromMap(call, "param"));
                 break;
             case FlutterPluginMethodSetUserUniqueId:
                 AppLog.setUserUniqueID((String) call.argument("uuid"));
@@ -106,9 +104,38 @@ public class RangersApplogFlutterPlugin implements MethodCallHandler {
             case FlutterPluginMethodSetHeaderInfo:
                 AppLog.setHeaderInfo((HashMap<String, Object>) call.argument("customHeader"));
                 break;
+            case FlutterPluginMethodProfileSet:
+                AppLog.profileSet(getJsonFromMap(call, "profileDict"));
+                break;
+            case FlutterPluginMethodProfileSetOnce:
+                AppLog.profileSetOnce(getJsonFromMap(call, "profileDict"));
+                break;
+            case FlutterPluginMethodProfileIncrement:
+                AppLog.profileIncrement(getJsonFromMap(call, "profileDict"));
+                break;
+            case FlutterPluginMethodProfileAppend:
+                AppLog.profileAppend(getJsonFromMap(call, "profileDict"));
+                break;
+            case FlutterPluginMethodProfileUnset:
+                AppLog.profileUnset((String) call.argument("key"));
+                break;
+            case FlutterPluginMethodGetAllAbTestConfig:
+                break;
             default:
                 result.notImplemented();
                 break;
         }
     }
+    private JSONObject getJsonFromMap(MethodCall call, String param){
+        HashMap<String, Object> paramMap = (HashMap<String, Object>) call.argument(param);
+        JSONObject paramJson = new JSONObject();
+        for (Map.Entry<String, Object> entry : paramMap.entrySet()) {
+            try {
+                paramJson.put(entry.getKey(), entry.getValue());
+            } catch (JSONException e) {
+            }
+        }
+        return paramJson;
+    }
+
 }
