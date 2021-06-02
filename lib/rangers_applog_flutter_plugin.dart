@@ -46,9 +46,10 @@ class RangersApplogFlutterPlugin {
 
   /// get all ab config
   /// This method will not trigger exposure.
+  /// Note: Only avaliable on iOS!
   /// Usage example：
-  /// Map<String, dynamic> d = await FlutterRangersAppLog.getAllAbTestConfig();
-  static Future<Map<String, dynamic>> getAllAbTestConfig() async {
+  /// Map<dynamic, dynamic> d = await FlutterRangersAppLog.getAllAbTestConfig();
+  static Future<Map<dynamic, dynamic>> getAllAbTestConfig() async {
     return await _channel.invokeMethod('getAllAbTestConfig');
   }
 
@@ -57,7 +58,7 @@ class RangersApplogFlutterPlugin {
   /// @returns 对应abConfigValue
   /// 使用示例：
   /// String value = await FlutterRangersAppLog.getABTestConfigValueForKey('ab_test_key');
-  static Future<String> getABTestConfigValueForKey(
+  static Future<dynamic> getABTestConfigValueForKey(
       String key, dynamic defaultValue) async {
     return await _channel.invokeMethod(
         'getABTestConfigValueForKey', {'key': key, 'default': defaultValue});

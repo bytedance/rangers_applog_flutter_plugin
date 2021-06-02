@@ -19,15 +19,14 @@ class _MyAppState extends State<MyApp> {
 
   String _device_id = 'Unknown';
   String _ab_sdk_version = 'Unknown';
-  String _ab_config_value = 'Unknown';
+  dynamic _ab_config_value;
+  Map<dynamic, dynamic> allABConfigs;
 
   Future<void> _initAppLog() async {
-
     try {
       RangersApplogFlutterPlugin.initRangersAppLog(
-          "159486", "local_test", true, true, true, null);
+          "189693", "local_test", true, true, true, null);
     } on Exception {}
-
   }
 
   Future<void> _getDid() async {
@@ -63,12 +62,25 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<void> _getABTestConfigValueForKey() async {
-    String value = 'Unknown';
+  Future<void> _getAllAbTestConfig() async {
+    Map<dynamic, dynamic> value;
     try {
-      final String result =
+      final Map<dynamic, dynamic> result =
+          await RangersApplogFlutterPlugin.getAllAbTestConfig();
+      value = result;
+      print(value);
+    } on Exception {}
+    setState(() {
+      allABConfigs = value;
+    });
+  }
+
+  Future<void> _getABTestConfigValueForKey() async {
+    dynamic value;
+    try {
+      final dynamic result =
           await RangersApplogFlutterPlugin.getABTestConfigValueForKey(
-              'ab_config_key', "");
+              'font_size', "ab_default_val");
       value = result;
     } on Exception {}
     setState(() {
@@ -101,6 +113,11 @@ class _MyAppState extends State<MyApp> {
                   title: Text("Test get ab_sdk_version $_ab_sdk_version"),
                   onTap: () {
                     _getAbSdkVersion();
+                  }),
+              ListTile(
+                  title: Text('getAllAbTestConfig $allABConfigs'),
+                  onTap: () {
+                    _getAllAbTestConfig();
                   }),
               ListTile(
                   title: Text("Test get abTestConfigValue $_ab_config_value"),

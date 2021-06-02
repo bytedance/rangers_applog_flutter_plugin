@@ -7,6 +7,7 @@
   * profileUnset
   * profileIncrement
   * profileAppend
+* iOS: add support of the following methods:
   * getAllAbTestConfig
 
 ## 1.0.3

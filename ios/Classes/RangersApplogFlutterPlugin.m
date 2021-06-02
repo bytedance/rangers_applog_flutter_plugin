@@ -76,11 +76,11 @@ static inline id setNSNullToNil(id value, Class target){
         // NSLog(@"%@", call.arguments);
         NSString *event = setNSNullToNil([arguments valueForKey:@"event"], [NSString class]);
         NSDictionary *param = [arguments valueForKey:@"param"];
-        BOOL ret = [BDAutoTrack eventV3:event params:param];
+        BOOL ret = [[BDAutoTrack sharedTrack] eventV3:event params:param];
         result(nil);
     }
     else if ([methodName isEqualToString:@"getDeviceId"]) {
-        result([BDAutoTrack rangersDeviceID]);
+        result([[BDAutoTrack sharedTrack] rangersDeviceID]);
     }
 
     /* Custom Header */
@@ -89,7 +89,7 @@ static inline id setNSNullToNil(id value, Class target){
         for (NSString *key in customHeader) {
             if ([key isKindOfClass:NSString.class]) {
                 NSObject *val = customHeader[key];
-                [BDAutoTrack setCustomHeaderValue:val forKey:key];
+                [[BDAutoTrack sharedTrack] setCustomHeaderValue:val forKey:key];
             }
         }
     }
@@ -97,12 +97,12 @@ static inline id setNSNullToNil(id value, Class target){
     /* Login and Logout */
     else if ([methodName isEqualToString:@"setUserUniqueId"]) {
         NSString *userUniqueID = setNSNullToNil([arguments valueForKey:@"uuid"], [NSString class]);
-        [BDAutoTrack setCurrentUserUniqueID:userUniqueID];
+        [[BDAutoTrack sharedTrack] setCurrentUserUniqueID:userUniqueID];
     }
     
     /* AB Test */
     else if ([methodName isEqualToString:@"getAbSdkVersion"]) {
-        NSString *vids = [BDAutoTrack allAbVids];
+        NSString *vids = [[BDAutoTrack sharedTrack] allAbVids];
         result(vids);
     }
     else if ([methodName isEqualToString:@"getAllAbTestConfig"]) {
@@ -112,7 +112,7 @@ static inline id setNSNullToNil(id value, Class target){
     else if ([methodName isEqualToString:@"getABTestConfigValueForKey"]) {
         NSString *key = setNSNullToNil([arguments valueForKey:@"key"], [NSString class]);
         NSObject *defaultVal = setNSNullToNil([arguments valueForKey:@"default"], [NSObject class]);
-        id val = [BDAutoTrack ABTestConfigValueForKey:key defaultValue:defaultVal];
+        id val = [[BDAutoTrack sharedTrack] ABTestConfigValueForKey:key defaultValue:defaultVal];
         result(val);
     }
     
