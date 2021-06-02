@@ -92,6 +92,10 @@ class RangersApplogFlutterPlugin {
     _channel.invokeMethod("setHeaderInfo", {'customHeader': customHeader});
   }
 
+  static void removeHeaderInfo(String key) {
+    _channel.invokeMethod('removeHeaderInfo', {'key': key});
+  }
+
   /* Profile */
   static void profileSet(Map<String, dynamic> profileDict) {
     _channel.invokeMethod('profileSet', {'profileDict': profileDict});
