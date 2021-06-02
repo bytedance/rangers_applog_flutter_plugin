@@ -9,6 +9,7 @@ class RangersApplogFlutterPlugin {
   /// 初始化SDK，应该尽早初始化，推荐
   /// @param appid  String 上报的AppID.
   /// @param channel  String 渠道.
+  /// @host private report URL e.g. https://myprivateurl.com
   /// 使用示例：
   /// FlutterRangersAppLog.initRangersAppLog('159486','test_channel');
   /// 推荐在native端初始化SDK，这样可以采集到更多的信息，而不是Flutter启动后才初始化SDK

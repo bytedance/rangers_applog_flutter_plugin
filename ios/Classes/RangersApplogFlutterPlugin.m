@@ -45,14 +45,16 @@ static inline id setNSNullToNil(id value, Class target){
     else if ([methodName isEqualToString:@"initRangersAppLog"]) {
         NSString *appID = setNSNullToNil([arguments valueForKey:@"appid"], [NSString class]);
         NSString *channel = setNSNullToNil([arguments valueForKey:@"channel"], [NSString class]);
-        NSNumber *enableAB = setNSNullToNil([arguments valueForKey:@"enableAb"], [NSNumber class]);
-        NSNumber *enableDebugLog = setNSNullToNil([arguments valueForKey:@"enableLog"], [NSNumber class]);
-        NSString *reportUrl = setNSNullToNil([arguments valueForKey:@"reportUrl"], [NSString class]);
+        NSNumber *enableAB = setNSNullToNil([arguments valueForKey:@"enable_ab"], [NSNumber class]);
+        NSNumber *enableEncrypt = setNSNullToNil([arguments valueForKey:@"enable_encrypt"], [NSNumber class]);
+        NSNumber *enableDebugLog = setNSNullToNil([arguments valueForKey:@"enable_log"], [NSNumber class]);
+        NSString *host = setNSNullToNil([arguments valueForKey:@"host"], [NSString class]);
         
         BDAutoTrackConfig *config = [BDAutoTrackConfig configWithAppID:appID];
         if ([channel isKindOfClass:NSString.class] && channel.length > 0) {
             config.channel = channel;
         }
+        config.logNeedEncrypt = [enableEncrypt boolValue];
         config.abEnable = [enableAB boolValue];
         config.showDebugLog = [enableDebugLog boolValue];
         config.serviceVendor = BDAutoTrackServiceVendorCN;
@@ -62,9 +64,9 @@ static inline id setNSNullToNil(id value, Class target){
             NSLog(@"flutter-plugin applog %@",log);
         };
 #endif
-        if ([reportUrl isKindOfClass:NSString.class] && reportUrl.length > 0) {
+        if ([host isKindOfClass:NSString.class] && host.length > 0) {
             [BDAutoTrack setRequestHostBlock:^NSString * _Nullable(BDAutoTrackServiceVendor vendor, BDAutoTrackRequestURLType requestURLType) {
-                return reportUrl;
+                return host;
             }];
         }
         [BDAutoTrack startTrackWithConfig:config];
