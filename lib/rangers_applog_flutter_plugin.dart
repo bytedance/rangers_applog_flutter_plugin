@@ -5,6 +5,27 @@ import 'package:flutter/services.dart';
 class RangersApplogFlutterPlugin {
   static const MethodChannel _channel = const MethodChannel('rangers_applog_flutter_plugin');
 
+
+  /// 初始化SDK，应该尽早初始化，推荐
+  /// @param appid  String 上报的AppID.
+  /// @param channel  String 渠道.
+  /// 使用示例：
+  /// FlutterRangersAppLog.initRangersAppLog('159486','test_channel');
+  /// 推荐在native端初始化SDK，这样可以采集到更多的信息，而不是Flutter启动后才初始化SDK
+  static void initRangersAppLog(String appid, String channel, bool enableAb, bool enableEncrypt, bool enableLog, String host) {
+    assert(appid != null && appid.isNotEmpty);
+    assert(channel != null && channel.isNotEmpty);
+    _channel.invokeMethod('initRangersAppLog', {
+      "appid":appid,
+      "channel":channel,
+      "enable_ab":enableAb,
+      "enable_encrypt":enableEncrypt,
+      "enable_log":enableLog,
+      "host":host
+    });
+  }
+
+
   /// 获取device_id
   /// @returns device_id
   /// 使用示例：

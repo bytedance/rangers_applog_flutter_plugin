@@ -21,6 +21,15 @@ class _MyAppState extends State<MyApp> {
   String _ab_sdk_version = 'Unknown';
   String _ab_config_value = 'Unknown';
 
+  Future<void> _initAppLog() async {
+
+    try {
+      RangersApplogFlutterPlugin.initRangersAppLog(
+          "159486", "local_test", true, true, true, null);
+    } on Exception {}
+
+  }
+
   Future<void> _getDid() async {
     String value = 'Unknown';
     try {
@@ -57,7 +66,9 @@ class _MyAppState extends State<MyApp> {
   Future<void> _getABTestConfigValueForKey() async {
     String value = 'Unknown';
     try {
-      final String result = await RangersApplogFlutterPlugin.getABTestConfigValueForKey('ab_config_key', "");
+      final String result =
+          await RangersApplogFlutterPlugin.getABTestConfigValueForKey(
+              'ab_config_key', "");
       value = result;
     } on Exception {}
     setState(() {
@@ -66,6 +77,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   static int uuid = 2020;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -75,6 +87,11 @@ class _MyAppState extends State<MyApp> {
           ),
           body: ListView(
             children: <Widget>[
+              ListTile(
+                  title: Text("init AppLog"),
+                  onTap: () {
+                    _initAppLog();
+                  }),
               ListTile(
                   title: Text("Test get device_id $_device_id"),
                   onTap: () {
