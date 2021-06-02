@@ -79,4 +79,25 @@ class RangersApplogFlutterPlugin {
   static void setHeaderInfo(Map<String, dynamic> customHeader) {
     _channel.invokeMethod("setHeaderInfo", {'customHeader': customHeader});
   }
+
+  /* Profile */
+  static void profileSet(Map<String, dynamic> profileDict) {
+    _channel.invokeMethod('profileSet', {'profileDict': profileDict});
+  }
+
+  static void profileSetOnce(Map<String, dynamic> profileDict) {
+    _channel.invokeMethod('profileSetOnce', {'profileDict': profileDict});
+  }
+
+  static void profileUnset(String key) {
+    _channel.invokeMethod('profileUnset', {'key': key});
+  }
+
+  static void profileIncrement(Map<String, dynamic> profileDict) {
+    _channel.invokeMethod('profileIncrement', {'profileDict': profileDict});
+  }
+
+  static void profileAppend(Map<String, dynamic> profileDict) {
+    _channel.invokeMethod('profileAppend', {'profileDict': profileDict});
+  }
 }
