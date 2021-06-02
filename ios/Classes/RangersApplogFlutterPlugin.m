@@ -79,6 +79,11 @@ static inline id setNSNullToNil(id value, Class target){
         BOOL ret = [BDAutoTrack eventV3:event params:param];
         result(nil);
     }
+    else if ([methodName isEqualToString:@"getDeviceId"]) {
+        result([BDAutoTrack rangersDeviceID]);
+    }
+
+    /* Custom Header */
     else if ([methodName isEqualToString:@"setHeaderInfo"]) {
         NSDictionary *customHeader = setNSNullToNil([arguments valueForKey:@"customHeader"], [NSDictionary class]);
         for (NSString *key in customHeader) {
@@ -88,13 +93,14 @@ static inline id setNSNullToNil(id value, Class target){
             }
         }
     }
+
+    /* Login and Logout */
     else if ([methodName isEqualToString:@"setUserUniqueId"]) {
         NSString *userUniqueID = setNSNullToNil([arguments valueForKey:@"uuid"], [NSString class]);
         [BDAutoTrack setCurrentUserUniqueID:userUniqueID];
     }
-    else if ([methodName isEqualToString:@"getDeviceId"]) {
-        result([BDAutoTrack rangersDeviceID]);
-    }
+    
+    /* AB Test */
     else if ([methodName isEqualToString:@"getAbSdkVersion"]) {
         NSString *vids = [BDAutoTrack allAbVids];
         result(vids);
@@ -104,6 +110,28 @@ static inline id setNSNullToNil(id value, Class target){
         NSObject *defaultVal = setNSNullToNil([arguments valueForKey:@"default"], [NSObject class]);
         id val = [BDAutoTrack ABTestConfigValueForKey:key defaultValue:defaultVal];
         result(val);
+    }
+    
+    /* Profile */
+    else if ([methodName isEqualToString:@"profileSet"]) {
+        NSDictionary *profileDict = setNSNullToNil([arguments valueForKey:@"profileDict"], [NSDictionary class]);
+        [[BDAutoTrack sharedTrack] profileSet:profileDict];
+    }
+    else if ([methodName isEqualToString:@"profileSetOnce"]) {
+        NSDictionary *profileDict = setNSNullToNil([arguments valueForKey:@"profileDict"], [NSDictionary class]);
+        [[BDAutoTrack sharedTrack] profileSetOnce:profileDict];
+    }
+    else if ([methodName isEqualToString:@"profileUnset"]) {
+        NSString *key = setNSNullToNil([arguments valueForKey:@"key"], [NSString class]);
+        [[BDAutoTrack sharedTrack] profileUnset:key];
+    }
+    else if ([methodName isEqualToString:@"profileIncrement"]) {
+        NSDictionary *profileDict = setNSNullToNil([arguments valueForKey:@"profileDict"], [NSDictionary class]);
+        [[BDAutoTrack sharedTrack] profileIncrement:profileDict];
+    }
+    else if ([methodName isEqualToString:@"profileAppend"]) {
+        NSDictionary *profileDict = setNSNullToNil([arguments valueForKey:@"profileDict"], [NSDictionary class]);
+        [[BDAutoTrack sharedTrack] profileAppend:profileDict];
     }
     else {
         result(FlutterMethodNotImplemented);
