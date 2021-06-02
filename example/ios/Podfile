@@ -1,5 +1,8 @@
 # 1. 注意要引入spec
+source 'https://cdn.cocoapods.org'
 source 'https://github.com/bytedance/cocoapods_sdk_source_repo.git'
+source 'https://github.com/volcengine/volcengine-specs.git'
+
 platform :ios, '9.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
