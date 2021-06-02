@@ -1,3 +1,14 @@
+## 1.0.4
+
+* iOS & Android: add support of the following methods:
+  * initRangersAppLog
+  * profileSet
+  * profileSetOnce
+  * profileUnset
+  * profileIncrement
+  * profileAppend
+  * getAllAbTestConfig
+
 ## 1.0.3
 
 * Android: 插件改为compileOnly依赖原生RangersAppLog，需要在原生android工程implementation依赖。
