@@ -105,6 +105,10 @@ static inline id setNSNullToNil(id value, Class target){
         NSString *vids = [BDAutoTrack allAbVids];
         result(vids);
     }
+    else if ([methodName isEqualToString:@"getAllAbTestConfig"]) {
+        NSDictionary *allConfigs = [[BDAutoTrack sharedTrack] allABTestConfigs];
+        result(allConfigs);
+    }
     else if ([methodName isEqualToString:@"getABTestConfigValueForKey"]) {
         NSString *key = setNSNullToNil([arguments valueForKey:@"key"], [NSString class]);
         NSObject *defaultVal = setNSNullToNil([arguments valueForKey:@"default"], [NSObject class]);

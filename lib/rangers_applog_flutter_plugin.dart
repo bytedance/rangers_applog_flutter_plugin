@@ -35,12 +35,21 @@ class RangersApplogFlutterPlugin {
     return await _channel.invokeMethod('getDeviceId');
   }
 
+  /* AB Test */
   /// 获取ab_sdk_version
   /// @returns ab_sdk_version
   /// 使用示例：
   /// String value = await FlutterRangersAppLog.getAbSdkVersion();
   static Future<String> getAbSdkVersion() async {
     return await _channel.invokeMethod('getAbSdkVersion');
+  }
+
+  /// get all ab config
+  /// This method will not trigger exposure.
+  /// Usage example：
+  /// Map<String, dynamic> d = await FlutterRangersAppLog.getAllAbTestConfig();
+  static Future<Map<String, dynamic>> getAllAbTestConfig() async {
+    return await _channel.invokeMethod('getAllAbTestConfig');
   }
 
   /// 获取对应key的abConfigValue
@@ -64,14 +73,16 @@ class RangersApplogFlutterPlugin {
     _channel.invokeMethod("onEventV3", {'event': eventName, 'param': params});
   }
 
+  /* Login and Logout */
   /// 设置user_unique_id
-  /// @param userUniqueID  String 登录的账号ID.
+  /// @param userUniqueID String Pass userID you want to log in. Pass null to log out.
   /// 使用示例：
   /// FlutterRangersAppLog.setUserUniqueId('123');
   static void setUserUniqueId(String userUniqueID) {
     _channel.invokeMethod('setUserUniqueId', {'uuid': userUniqueID});
   }
 
+  /* Custom Header */
   /// 自定义header信息
   /// @param params Map<String, dynamic> header信息.
   /// 使用示例：
