@@ -5,6 +5,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven{
+            url 'https://artifact.bytedance.com/repository/Volcengine/'
+        }
     }
 
     dependencies {
@@ -16,6 +19,9 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+        maven{
+            url 'https://artifact.bytedance.com/repository/Volcengine/'
+        }
     }
 }
 
@@ -34,5 +40,5 @@ android {
 }
 
 dependencies {
-    compileOnly 'com.bytedance.applog:RangersAppLog-Lite-cn:5.4.2'
+    compileOnly 'com.bytedance.applog:RangersAppLog-Lite-cn:6.1.3'
 }
