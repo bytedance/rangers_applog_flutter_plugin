@@ -1,7 +1,11 @@
+## 1.0.5
+* iOS & Android: add support of the following method(s):
+  * removeHeaderInfo
+
 ## 1.0.4
 
 * iOS & Android: add support of the following methods:
-  * initRangersAppLog
+  * initRangersAppLog (please take a look at the interface doc)
   * profileSet
   * profileSetOnce
   * profileUnset
