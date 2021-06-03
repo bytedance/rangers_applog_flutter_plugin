@@ -14,8 +14,8 @@ class RangersApplogFlutterPlugin {
   /// @param appid  String AppID of Rangers.
   /// @param channel  String.
   /// @host private report URL. e.g. https://myprivateurl.com/ Pass `null` if you dont know what this is.
-  /// Usage：
-  /// FlutterRangersAppLog.initRangersAppLog('159486','test_channel');
+  /// Usage：(replace 123456 with your appid)
+  /// FlutterRangersAppLog.initRangersAppLog('123456','test_channel', true, true, false, null);
   static void initRangersAppLog(String appid, String channel, bool enableAb,
       bool enableEncrypt, bool enableLog, String host) {
     assert(appid != null && appid.isNotEmpty);
