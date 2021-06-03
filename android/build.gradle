@@ -40,5 +40,5 @@ android {
 }
 
 dependencies {
-    compileOnly 'com.bytedance.applog:RangersAppLog-Lite-cn:6.1.3'
+    compileOnly 'com.bytedance.applog:RangersAppLog-Lite-global:6.1.3'
 }
