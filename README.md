@@ -45,6 +45,9 @@ You can init SDK in native side or dart side.
 Take a look at project example project [AppDelegate.m](example/ios/Runner/AppDelegate.m).
 
 2. dart side.
+```dart
+RangersApplogFlutterPlugin.initRangersAppLog('123456','test_channel', true, true, false, null);
+```
 #### 注册插件 Register plugin
 ```objective-c
 #import "GeneratedPluginRegistrant.h"
@@ -77,4 +80,4 @@ import 'package: rangers_applog_flutter_plugin/rangers_applog_flutter_plugin.dar
  ```
 
 其他更多接口请参考Demo和plugin注释。
-For more detailed docs please refer to source code doc and example project in this repo.
+For more detailed docs and usage examples, please refer to source code doc and example project in this repo.
