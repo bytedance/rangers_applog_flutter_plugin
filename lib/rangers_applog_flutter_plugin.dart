@@ -15,7 +15,7 @@ class RangersApplogFlutterPlugin {
   /// @param channel  String.
   /// @host private report URL. e.g. https://myprivateurl.com/ Pass `null` if you dont know what this is.
   /// Usage：(replace 123456 with your appid)
-  /// FlutterRangersAppLog.initRangersAppLog('123456','test_channel', true, true, false, null);
+  /// RangersApplogFlutterPlugin.initRangersAppLog('123456','test_channel', true, true, false, null);
   static void initRangersAppLog(String appid, String channel, bool enableAb,
       bool enableEncrypt, bool enableLog, String host) {
     assert(appid != null && appid.isNotEmpty);
@@ -33,7 +33,7 @@ class RangersApplogFlutterPlugin {
   /// get device_id
   /// @returns device_id
   /// Usage：
-  /// String value = await FlutterRangersAppLog.getDeviceId();
+  /// String value = await RangersApplogFlutterPlugin.getDeviceId();
   static Future<String> getDeviceId() async {
     return await _channel.invokeMethod('getDeviceId');
   }
@@ -42,7 +42,7 @@ class RangersApplogFlutterPlugin {
   /// get ab_sdk_version
   /// @returns ab_sdk_version
   /// Usage：
-  /// String value = await FlutterRangersAppLog.getAbSdkVersion();
+  /// String value = await RangersApplogFlutterPlugin.getAbSdkVersion();
   static Future<String> getAbSdkVersion() async {
     return await _channel.invokeMethod('getAbSdkVersion');
   }
@@ -51,7 +51,7 @@ class RangersApplogFlutterPlugin {
   /// This method will not trigger exposure.
   /// Note: Only avaliable on iOS!
   /// Usage example：
-  /// Map<dynamic, dynamic> d = await FlutterRangersAppLog.getAllAbTestConfig();
+  /// Map<dynamic, dynamic> d = await RangersApplogFlutterPlugin.getAllAbTestConfig();
   static Future<Map<dynamic, dynamic>> getAllAbTestConfig() async {
     return await _channel.invokeMethod('getAllAbTestConfig');
   }
@@ -60,7 +60,7 @@ class RangersApplogFlutterPlugin {
   /// @param key  String
   /// @returns corresponding abConfigValue
   /// Usage：
-  /// String value = await FlutterRangersAppLog.getABTestConfigValueForKey('ab_test_key');
+  /// String value = await RangersApplogFlutterPlugin.getABTestConfigValueForKey('ab_test_key');
   static Future<dynamic> getABTestConfigValueForKey(
       String key, dynamic defaultValue) async {
     return await _channel.invokeMethod(
@@ -68,10 +68,10 @@ class RangersApplogFlutterPlugin {
   }
 
   /// track events
-  /// @param eventName  String 
+  /// @param eventName  String
   /// @param params Map<String, dynamic> event properties
   /// Usage：
-  /// FlutterRangersAppLog.onEventV3('flutter_start',{'key1':'value1','key2':'value2'});
+  /// RangersApplogFlutterPlugin.onEventV3('flutter_start',{'key1':'value1','key2':'value2'});
   static void onEventV3(String eventName, Map<String, dynamic> params) {
     assert(eventName != null);
     _channel.invokeMethod("onEventV3", {'event': eventName, 'param': params});
@@ -81,7 +81,7 @@ class RangersApplogFlutterPlugin {
   /// set user_unique_id
   /// @param userUniqueID String Pass the userID you want to log in. Pass `null` to log out.
   /// Usage：
-  /// FlutterRangersAppLog.setUserUniqueId('123');
+  /// RangersApplogFlutterPlugin.setUserUniqueId('123');
   static void setUserUniqueId(String userUniqueID) {
     _channel.invokeMethod('setUserUniqueId', {'uuid': userUniqueID});
   }
@@ -90,7 +90,7 @@ class RangersApplogFlutterPlugin {
   /// custom header info
   /// @param params Map<String, dynamic> header信息.
   /// Usage：
-  /// FlutterRangersAppLog.setHeaderInfo({'key1':'value1','key2':'value2'});
+  /// RangersApplogFlutterPlugin.setHeaderInfo({'key1':'value1','key2':'value2'});
   static void setHeaderInfo(Map<String, dynamic> customHeader) {
     _channel.invokeMethod("setHeaderInfo", {'customHeader': customHeader});
   }
