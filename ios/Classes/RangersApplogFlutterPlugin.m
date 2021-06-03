@@ -94,6 +94,11 @@ static inline id setNSNullToNil(id value, Class target){
         }
     }
 
+    else if ([methodName isEqualToString:@"removeHeaderInfo"]) {
+        NSString *key = setNSNullToNil([arguments valueForKey:@"key"], [NSString class]);
+        [[BDAutoTrack sharedTrack] removeCustomHeaderValueForKey:key];
+    }
+
     /* Login and Logout */
     else if ([methodName isEqualToString:@"setUserUniqueId"]) {
         NSString *userUniqueID = setNSNullToNil([arguments valueForKey:@"uuid"], [NSString class]);

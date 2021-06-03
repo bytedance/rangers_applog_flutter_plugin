@@ -140,6 +140,12 @@ class _MyAppState extends State<MyApp> {
                     });
                   }),
               ListTile(
+                  title: Text("Test removeHeaderInfo"),
+                  onTap: () {
+                    RangersApplogFlutterPlugin.removeHeaderInfo("header_key1");
+                    RangersApplogFlutterPlugin.removeHeaderInfo("header_key2");
+                  }),
+              ListTile(
                   title: Text("Test setUserUniqueId"),
                   onTap: () {
                     RangersApplogFlutterPlugin.setUserUniqueId(uuid.toString());

@@ -40,7 +40,7 @@ public class RangersApplogFlutterPlugin implements MethodCallHandler {
     private static final String FlutterPluginMethodProfileIncrement = "profileIncrement";
     private static final String FlutterPluginMethodProfileUnset = "profileUnSet";
     private static final String FlutterPluginMethodGetAllAbTestConfig = "getAllAbTestConfig";
-
+    private static final String FlutterPluginMethodRemoveHeaderInfo = "removeHeaderInfo";
     private Activity activity;
 
     private RangersApplogFlutterPlugin(Activity activity) {
@@ -121,6 +121,8 @@ public class RangersApplogFlutterPlugin implements MethodCallHandler {
                 break;
             case FlutterPluginMethodGetAllAbTestConfig:
                 break;
+            case FlutterPluginMethodRemoveHeaderInfo:
+                AppLog.removeHeaderInfo((String) call.argument("key"));
             default:
                 result.notImplemented();
                 break;

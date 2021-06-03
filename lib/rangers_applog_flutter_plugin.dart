@@ -6,13 +6,16 @@ class RangersApplogFlutterPlugin {
   static const MethodChannel _channel =
       const MethodChannel('rangers_applog_flutter_plugin');
 
-  /// 初始化SDK，应该尽早初始化，推荐
-  /// @param appid  String 上报的AppID.
-  /// @param channel  String 渠道.
-  /// @host private report URL e.g. https://myprivateurl.com
-  /// 使用示例：
+/* 提示：可以到[Rangers官网](https://datarangers.com.cn/)查看更详细的文档 
+ * Note: Refer to more detailed docs at https://datarangers.com/
+*/
+  /// Init SDK，expected to be called as early as possible.
+  /// Note: You can also choose to init SDK in native side (say, using Java or Objective-C). If so, this method is not expected to be called.
+  /// @param appid  String AppID of Rangers.
+  /// @param channel  String.
+  /// @host private report URL. e.g. https://myprivateurl.com/ Pass `null` if you dont know what this is.
+  /// Usage：
   /// FlutterRangersAppLog.initRangersAppLog('159486','test_channel');
-  /// 推荐在native端初始化SDK，这样可以采集到更多的信息，而不是Flutter启动后才初始化SDK
   static void initRangersAppLog(String appid, String channel, bool enableAb,
       bool enableEncrypt, bool enableLog, String host) {
     assert(appid != null && appid.isNotEmpty);
@@ -27,18 +30,18 @@ class RangersApplogFlutterPlugin {
     });
   }
 
-  /// 获取device_id
+  /// get device_id
   /// @returns device_id
-  /// 使用示例：
+  /// Usage：
   /// String value = await FlutterRangersAppLog.getDeviceId();
   static Future<String> getDeviceId() async {
     return await _channel.invokeMethod('getDeviceId');
   }
 
   /* AB Test */
-  /// 获取ab_sdk_version
+  /// get ab_sdk_version
   /// @returns ab_sdk_version
-  /// 使用示例：
+  /// Usage：
   /// String value = await FlutterRangersAppLog.getAbSdkVersion();
   static Future<String> getAbSdkVersion() async {
     return await _channel.invokeMethod('getAbSdkVersion');
@@ -53,10 +56,10 @@ class RangersApplogFlutterPlugin {
     return await _channel.invokeMethod('getAllAbTestConfig');
   }
 
-  /// 获取对应key的abConfigValue
+  /// get the abConfigValue of the corresponding `key`
   /// @param key  String
-  /// @returns 对应abConfigValue
-  /// 使用示例：
+  /// @returns corresponding abConfigValue
+  /// Usage：
   /// String value = await FlutterRangersAppLog.getABTestConfigValueForKey('ab_test_key');
   static Future<dynamic> getABTestConfigValueForKey(
       String key, dynamic defaultValue) async {
@@ -64,10 +67,10 @@ class RangersApplogFlutterPlugin {
         'getABTestConfigValueForKey', {'key': key, 'default': defaultValue});
   }
 
-  /// v3埋点上报
-  /// @param eventName  String 事件名.
-  /// @param params Map<String, dynamic> 事件属性.
-  /// 使用示例：
+  /// track events
+  /// @param eventName  String 
+  /// @param params Map<String, dynamic> event properties
+  /// Usage：
   /// FlutterRangersAppLog.onEventV3('flutter_start',{'key1':'value1','key2':'value2'});
   static void onEventV3(String eventName, Map<String, dynamic> params) {
     assert(eventName != null);
@@ -75,21 +78,25 @@ class RangersApplogFlutterPlugin {
   }
 
   /* Login and Logout */
-  /// 设置user_unique_id
-  /// @param userUniqueID String Pass userID you want to log in. Pass null to log out.
-  /// 使用示例：
+  /// set user_unique_id
+  /// @param userUniqueID String Pass the userID you want to log in. Pass `null` to log out.
+  /// Usage：
   /// FlutterRangersAppLog.setUserUniqueId('123');
   static void setUserUniqueId(String userUniqueID) {
     _channel.invokeMethod('setUserUniqueId', {'uuid': userUniqueID});
   }
 
   /* Custom Header */
-  /// 自定义header信息
+  /// custom header info
   /// @param params Map<String, dynamic> header信息.
-  /// 使用示例：
+  /// Usage：
   /// FlutterRangersAppLog.setHeaderInfo({'key1':'value1','key2':'value2'});
   static void setHeaderInfo(Map<String, dynamic> customHeader) {
     _channel.invokeMethod("setHeaderInfo", {'customHeader': customHeader});
+  }
+
+  static void removeHeaderInfo(String key) {
+    _channel.invokeMethod('removeHeaderInfo', {'key': key});
   }
 
   /* Profile */
