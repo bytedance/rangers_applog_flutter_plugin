@@ -2,33 +2,50 @@
 
  RangersAppLog的[Flutter插件](https://pub.dev/packages/rangers_applog_flutter_plugin)。支持埋点上报。
  
-##  集成
+ Flutter plugin for RangersAppLog.
+ 
+ 提示：可以到[Rangers官网](https://datarangers.com.cn/)查看更详细的文档 
+ 
+ Note: Refer to more detailed docs at https://datarangers.com/
+ 
+##  集成 Install plugin
 
-### 在项目中添加安装插件
-在`pubspec.yaml` 中添加依赖
+### Add dependency in `pubspec.yaml` 
 ```
 dependencies:
     rangers_applog_flutter_plugin: ^1.0.3
 ```
  
-执行 `flutter packages get` 命令安装插件
+### Install plugin
 ```
  flutter packages get  
 ```
 
-### iOS 端
+### iOS
 #### Podfile
-在`Podfile`第一行添加
-```
+Add source commands in `Podfile`
+```ruby
+source 'https://cdn.cocoapods.org'
 source 'https://github.com/bytedance/cocoapods_sdk_source_repo.git'
+source 'https://github.com/volcengine/volcengine-specs.git'
 ```
-并依赖RangersAppLog. 具体可参考Example或[iOS集成文档](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=8547)
+Add RangersAppLog dependency. 具体可参考Example或[iOS集成文档](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=8547)
+```ruby
+  pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/CN']  # 中国区上报
+  # pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/SG']  # report to SG
+```
 
-#### 初始化
-需要在原生`- [AppDeleate (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions]`中初始化。
+#### 初始化 Init SDK
+You can init SDK in native side or dart side.
+
+1. Natvie side
+在原生`- [AppDeleate (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions]`中初始化。
 初始化方式请参考Example或[iOS集成文档](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=8547)
- 
-#### 注册插件
+
+Take a look at project example project [AppDelegate.m](example/ios/Runner/AppDelegate.m).
+
+2. dart side.
+#### 注册插件 Register plugin
 ```objective-c
 #import "GeneratedPluginRegistrant.h"
 #import <rangers_applog_flutter_plugin/RangersApplogFlutterPlugin.h>
@@ -42,22 +59,22 @@ source 'https://github.com/bytedance/cocoapods_sdk_source_repo.git'
 @end
 ```
 
-### Android 端
-需要在android原生工程集成依赖并初始化RangersAppLog，请参考[RangersAppLog Android](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=10942)
-
+### Android
+#### 初始化 Init SDK
+You can init SDK in native side or dart side.
+1. Init SDK in native side. 在android原生工程集成依赖并初始化RangersAppLog，请参考[RangersAppLog Android](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=10942)
+2. Init SDK in dart side.
   
-### Flutter 中使用插件 
-import插件
-
-```
+### Flutter
+import plugin
+```dart
 import 'package: rangers_applog_flutter_plugin/rangers_applog_flutter_plugin.dart';
 ```
 
-使用Flutter plugin上报
-
- ```
- RangersApplogFlutterPlugin.onEventV3("appid", "test_event", {"key":"value"});
+### Usage example
+ ```dart
+ RangersApplogFlutterPlugin.onEventV3("test_event_name", {"event_param":"param_value"});
  ```
 
 其他更多接口请参考Demo和plugin注释。
-
+For more detailed docs please refer to source code doc and example project in this repo.
