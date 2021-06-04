@@ -1,5 +1,7 @@
 # RangersAppLogFlutterPlugin
 
+*For global version, please check `global` branch.*
+
  RangersAppLog的[Flutter插件](https://pub.dev/packages/rangers_applog_flutter_plugin)。支持埋点上报。
  
  Flutter plugin for RangersAppLog.
