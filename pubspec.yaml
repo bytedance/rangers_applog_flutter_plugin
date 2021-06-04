@@ -1,7 +1,7 @@
-name: rangers_applog_global_flutter_plugin
+name: rangers_applog_flutter_plugin
 description: flutter plugin for RangersAppLog global.
-version: 1.0.6
-author: "bob <bob170731@gmail.com>"
+version: 1.0.5-global
+author: "郑培建 <zhengpeijian.5@bytedance.com>"
 homepage: "https://github.com/bytedance/rangers_applog_flutter_plugin"
 
 environment:

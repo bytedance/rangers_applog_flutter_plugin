@@ -1,3 +1,6 @@
+## 1.0.5-global
+* support global user
+ 
 ## 1.0.5
 * iOS & Android: add support of the following method(s):
   * removeHeaderInfo
