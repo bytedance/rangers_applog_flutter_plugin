@@ -1,4 +1,4 @@
-## 1.0.5-global
+## 1.0.6-global
 * support global user
  
 ## 1.0.5

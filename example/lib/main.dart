@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:rangers_applog_global_flutter_plugin/rangers_applog_flutter_plugin.dart';
+import 'package:rangers_applog_flutter_plugin/rangers_applog_flutter_plugin.dart';
 
 void main() => runApp(MyApp());
 
