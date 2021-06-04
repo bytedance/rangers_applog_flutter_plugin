@@ -13,7 +13,7 @@
 ### Add dependency in `pubspec.yaml` 
 ```
 dependencies:
-    rangers_applog_flutter_plugin: ^1.0.3
+    rangers_applog_flutter_plugin: 1.0.6-global
 ```
  
 ### Install plugin
