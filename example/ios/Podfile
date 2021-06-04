@@ -1,4 +1,4 @@
-# 1. 注意要引入spec
+# 1. import sources
 source 'https://cdn.cocoapods.org'
 source 'https://github.com/bytedance/cocoapods_sdk_source_repo.git'
 source 'https://github.com/volcengine/volcengine-specs.git'
@@ -34,9 +34,11 @@ flutter_ios_podfile_setup
 target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   
-  # 2. 参考以下的写法，在ios工程的Podfile中依赖RangersAppLog
-  pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/CN']  # 中国区上报
-  # pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/SG']  # report to SG
+  # 2. declare RangersAppLog dependency. 
+  pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/SG']  # report to SG
+  # We're working on v6.2.0 which includes more features and bugfixs. You can use it once it has been released.
+  # pod 'RangersAppLog', '~> 6.2.0', :subspecs => ['Core', 'Log', 'Host/SG']  
+  
 end
 
 post_install do |installer|
