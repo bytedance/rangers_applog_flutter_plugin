@@ -31,8 +31,8 @@ source 'https://github.com/volcengine/volcengine-specs.git'
 ```
 Add RangersAppLog dependency. 具体可参考Example或[iOS集成文档](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=8547)
 ```ruby
-  pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/CN']  # 中国区上报
-  # pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/SG']  # report to SG
+  # pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/CN']  # 中国区上报
+  pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/SG']  # report to SG
 ```
 
 #### 初始化 Init SDK
