@@ -1,3 +1,6 @@
+## 1.1.0
+* Migrate to null safety
+
 ## 1.0.5
 * iOS & Android: add support of the following method(s):
   * removeHeaderInfo
