@@ -1,12 +1,11 @@
 name: rangers_applog_flutter_plugin
 description: flutter plugin for RangersAppLog.
-version: 1.0.6
-author: "bob <bob170731@gmail.com>"
+version: 1.1.0
 homepage: "https://github.com/bytedance/rangers_applog_flutter_plugin"
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
-  flutter: ">=1.12.0 <2.0.0"
+  sdk: '>=2.12.0 <3.0.0'
+  flutter: ">=1.12.0"
 
 dependencies:
   flutter:

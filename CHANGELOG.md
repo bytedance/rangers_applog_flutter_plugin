@@ -1,3 +1,6 @@
+## 1.1.0
+* Migrate to null safety
+
 ## 1.0.6
 * Update doc
 

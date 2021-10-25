@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   String _device_id = 'Unknown';
   String _ab_sdk_version = 'Unknown';
   dynamic _ab_config_value;
-  Map<dynamic, dynamic> allABConfigs;
+  Map<dynamic, dynamic>? allABConfigs;
 
   Future<void> _initAppLog() async {
     try {
@@ -32,8 +32,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> _getDid() async {
     String value = 'Unknown';
     try {
-      final String result = await RangersApplogFlutterPlugin.getDeviceId();
-      value = result;
+      value = await RangersApplogFlutterPlugin.getDeviceId() ?? value;
     } on Exception {}
     setState(() {
       _did = value;
@@ -43,8 +42,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> _getDeviceID() async {
     String value = 'Unknown';
     try {
-      final String result = await RangersApplogFlutterPlugin.getDeviceId();
-      value = result;
+      value = await RangersApplogFlutterPlugin.getDeviceId() ?? value;
     } on Exception {}
     setState(() {
       _device_id = value;
@@ -54,8 +52,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> _getAbSdkVersion() async {
     String value = 'Unknown';
     try {
-      final String result = await RangersApplogFlutterPlugin.getAbSdkVersion();
-      value = result;
+      value = await RangersApplogFlutterPlugin.getAbSdkVersion() ?? value;
     } on Exception {}
     setState(() {
       _ab_sdk_version = value;
@@ -63,11 +60,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _getAllAbTestConfig() async {
-    Map<dynamic, dynamic> value;
+    Map<dynamic, dynamic>? value;
     try {
-      final Map<dynamic, dynamic> result =
-          await RangersApplogFlutterPlugin.getAllAbTestConfig();
-      value = result;
+      value = await RangersApplogFlutterPlugin.getAllAbTestConfig();
       print(value);
     } on Exception {}
     setState(() {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class RangersApplogFlutterPlugin {
+
   static const MethodChannel _channel =
       const MethodChannel('rangers_applog_flutter_plugin');
 
@@ -17,9 +18,9 @@ class RangersApplogFlutterPlugin {
   /// Usage：(replace 123456 with your appid)
   /// RangersApplogFlutterPlugin.initRangersAppLog('123456','test_channel', true, true, false, null);
   static void initRangersAppLog(String appid, String channel, bool enableAb,
-      bool enableEncrypt, bool enableLog, String host) {
-    assert(appid != null && appid.isNotEmpty);
-    assert(channel != null && channel.isNotEmpty);
+      bool enableEncrypt, bool enableLog, String? host) {
+    assert(appid.isNotEmpty);
+    assert(channel.isNotEmpty);
     _channel.invokeMethod('initRangersAppLog', {
       "appid": appid,
       "channel": channel,
@@ -34,7 +35,7 @@ class RangersApplogFlutterPlugin {
   /// @returns device_id
   /// Usage：
   /// String value = await RangersApplogFlutterPlugin.getDeviceId();
-  static Future<String> getDeviceId() async {
+  static Future<String?> getDeviceId() async {
     return await _channel.invokeMethod('getDeviceId');
   }
 
@@ -43,7 +44,7 @@ class RangersApplogFlutterPlugin {
   /// @returns ab_sdk_version
   /// Usage：
   /// String value = await RangersApplogFlutterPlugin.getAbSdkVersion();
-  static Future<String> getAbSdkVersion() async {
+  static Future<String?> getAbSdkVersion() async {
     return await _channel.invokeMethod('getAbSdkVersion');
   }
 
@@ -52,7 +53,7 @@ class RangersApplogFlutterPlugin {
   /// Note: Only avaliable on iOS!
   /// Usage example：
   /// Map<dynamic, dynamic> d = await RangersApplogFlutterPlugin.getAllAbTestConfig();
-  static Future<Map<dynamic, dynamic>> getAllAbTestConfig() async {
+  static Future<Map<dynamic, dynamic>?> getAllAbTestConfig() async {
     return await _channel.invokeMethod('getAllAbTestConfig');
   }
 
@@ -72,8 +73,7 @@ class RangersApplogFlutterPlugin {
   /// @param params Map<String, dynamic> event properties
   /// Usage：
   /// RangersApplogFlutterPlugin.onEventV3('flutter_start',{'key1':'value1','key2':'value2'});
-  static void onEventV3(String eventName, Map<String, dynamic> params) {
-    assert(eventName != null);
+  static void onEventV3(String eventName, Map<String, dynamic>? params) {
     _channel.invokeMethod("onEventV3", {'event': eventName, 'param': params});
   }
 
@@ -82,7 +82,7 @@ class RangersApplogFlutterPlugin {
   /// @param userUniqueID String Pass the userID you want to log in. Pass `null` to log out.
   /// Usage：
   /// RangersApplogFlutterPlugin.setUserUniqueId('123');
-  static void setUserUniqueId(String userUniqueID) {
+  static void setUserUniqueId(String? userUniqueID) {
     _channel.invokeMethod('setUserUniqueId', {'uuid': userUniqueID});
   }
 
