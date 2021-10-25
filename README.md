@@ -15,7 +15,7 @@
 ### Add dependency in `pubspec.yaml` 
 ```
 dependencies:
-    rangers_applog_flutter_plugin: ^1.0.3
+    rangers_applog_flutter_plugin: ^1.1.0
 ```
  
 ### Install plugin
@@ -33,7 +33,7 @@ source 'https://github.com/volcengine/volcengine-specs.git'
 ```
 Add RangersAppLog dependency. 具体可参考Example或[iOS集成文档](https://datarangers.com.cn/datarangers/help/doc?lid=1097&did=8547)
 ```ruby
-  pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/CN']  # 中国区上报
+  pod 'RangersAppLog', '~> 6.3.2', :subspecs => ['Core', 'Log', 'Host/CN']  # 中国区上报
   # pod 'RangersAppLog', '~> 5.6.3', :subspecs => ['Core', 'Log', 'Host/SG']  # report to SG
 ```
 
