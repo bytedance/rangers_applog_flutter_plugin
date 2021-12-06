@@ -1,3 +1,9 @@
+## 1.2.1
+* Update doc
+
+## 1.2.0
+* Migrate to Android V2 embedding
+
 ## 1.1.0
 * Migrate to null safety
 
