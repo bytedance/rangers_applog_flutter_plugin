@@ -1,3 +1,6 @@
+## 1.2.2
+* iOS: Compatible with "use framwork!"
+
 ## 1.2.1
 * Update doc
 
