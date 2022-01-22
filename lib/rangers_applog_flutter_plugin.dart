@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
+import 'data_observer_manager.dart';
+
 class RangersApplogFlutterPlugin {
 
   static const MethodChannel _channel =
@@ -29,6 +31,8 @@ class RangersApplogFlutterPlugin {
       "enable_log": enableLog,
       "host": host
     });
+
+    DataObserverManager.init();
   }
 
   /// get device_id
@@ -118,5 +122,13 @@ class RangersApplogFlutterPlugin {
 
   static void profileAppend(Map<String, dynamic> profileDict) {
     _channel.invokeMethod('profileAppend', {'profileDict': profileDict});
+  }
+
+  static Stream<void> receiveABTestConfigStream() {
+    return DataObserverManager.receiveABTestConfigStream();
+  }
+
+  static Stream<void> receiveABVidsChangeStream() {
+    return DataObserverManager.receiveABVidsChangeStream();
   }
 }

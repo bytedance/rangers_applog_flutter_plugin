@@ -7,6 +7,6 @@
 
 #import <Flutter/Flutter.h>
 
-@interface RangersApplogFlutterPlugin : NSObject<FlutterPlugin>
+@interface RangersApplogFlutterPlugin : NSObject<FlutterPlugin, FlutterStreamHandler>
 
 @end

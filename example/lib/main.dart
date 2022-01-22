@@ -16,7 +16,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _sdkVersion = 'Unknown';
   String _did = 'Unknown';
-
+  String _listen_text = 'Unknown';
+  String _listen_abconfig = 'Unknown';
+  String _listen_vidschange = 'Unknown';
   String _device_id = 'Unknown';
   String _ab_sdk_version = 'Unknown';
   dynamic _ab_config_value;
@@ -26,6 +28,16 @@ class _MyAppState extends State<MyApp> {
     try {
       RangersApplogFlutterPlugin.initRangersAppLog(
           "189693", "local_test", true, true, true, null);
+      RangersApplogFlutterPlugin.receiveABTestConfigStream().listen((event) {
+        setState(() {
+          _listen_text = "receiveABTestConfigStream";
+        });
+      });
+      RangersApplogFlutterPlugin.receiveABVidsChangeStream().listen((event) {
+        setState(() {
+          _listen_text = "receiveABVidsChangeStream";
+        });
+      });
     } on Exception {}
   }
 
@@ -75,7 +87,7 @@ class _MyAppState extends State<MyApp> {
     try {
       final dynamic result =
           await RangersApplogFlutterPlugin.getABTestConfigValueForKey(
-              'font_size', "ab_default_val");
+              'home_style', "ab_default_val");
       value = result;
     } on Exception {}
     setState(() {
@@ -95,7 +107,7 @@ class _MyAppState extends State<MyApp> {
           body: ListView(
             children: <Widget>[
               ListTile(
-                  title: Text("init AppLog"),
+                  title: Text("init AppLog $_listen_text"),
                   onTap: () {
                     _initAppLog();
                   }),
@@ -118,6 +130,15 @@ class _MyAppState extends State<MyApp> {
                   title: Text("Test get abTestConfigValue $_ab_config_value"),
                   onTap: () {
                     _getABTestConfigValueForKey();
+                  }),
+              ListTile(
+                  title: Text("Listen ABTestConfig $_listen_abconfig"),
+                  onTap: () {
+                    RangersApplogFlutterPlugin.receiveABTestConfigStream().listen((event) {
+                      setState(() {
+                        _listen_abconfig = "update ${DateTime.now()}";
+                      });
+                    });
                   }),
               ListTile(
                   title: Text("Test onEventV3"),

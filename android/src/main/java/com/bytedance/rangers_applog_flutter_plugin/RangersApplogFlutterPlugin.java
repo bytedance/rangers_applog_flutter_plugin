@@ -55,7 +55,8 @@ public class RangersApplogFlutterPlugin implements FlutterPlugin {
         private static final String FlutterPluginMethodProfileUnset = "profileUnSet";
         private static final String FlutterPluginMethodGetAllAbTestConfig = "getAllAbTestConfig";
         private static final String FlutterPluginMethodRemoveHeaderInfo = "removeHeaderInfo";
-        private Context context;
+
+        private final Context context;
 
         private AppLogMethodCallHandler(Context context) {
             this.context = context;
@@ -149,6 +150,9 @@ public class RangersApplogFlutterPlugin implements FlutterPlugin {
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         final MethodChannel channel = new MethodChannel(binding.getBinaryMessenger(), "rangers_applog_flutter_plugin");
         channel.setMethodCallHandler(new AppLogMethodCallHandler(binding.getApplicationContext()));
+
+        // init EventChannel、DataObserver
+        DataObserverManager.init(binding);
     }
 
     @Override

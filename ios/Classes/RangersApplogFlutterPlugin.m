@@ -21,6 +21,9 @@ static inline id setNSNullToNil(id value, Class target){
 
 @interface RangersApplogFlutterPlugin ()
 
+@property (nonatomic, strong) FlutterEventSink eventSink;
+@property (nonatomic, strong) NSMutableSet *eventCache;
+
 @end
 
 
@@ -33,14 +36,34 @@ static inline id setNSNullToNil(id value, Class target){
 
     RangersApplogFlutterPlugin* instance = [RangersApplogFlutterPlugin new];
     [registrar addMethodCallDelegate:instance channel:channel];
+    
+    FlutterEventChannel *eventChannel = [FlutterEventChannel eventChannelWithName:@"com.bytedance.applog/data_observer" binaryMessenger:[registrar messenger]];
+    [eventChannel setStreamHandler:instance];
 }
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                selector:@selector(onABTestSuccess:)
+                                                    name:BDAutoTrackNotificationABTestSuccess object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                selector:@selector(onABTestVidsChanged:)
+                                                    name:BDAutoTrackNotificationABTestVidsChanged object:nil];
+        _eventCache = [NSMutableSet new];
+    }
+    return self;
+}
+
+#pragma mark Method Channel
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     NSString *methodName = call.method;
     NSDictionary *arguments = setNSNullToNil(call.arguments, [NSDictionary class]);
     
     if ([methodName isEqualToString:@"sdkVersion"]) {
-        result([BDAutoTrack sdkVersion]);
+        result([BDAutoTrack SDKVersion]);
     }
     else if ([methodName isEqualToString:@"initRangersAppLog"]) {
         NSString *appID = setNSNullToNil([arguments valueForKey:@"appid"], [NSString class]);
@@ -145,6 +168,40 @@ static inline id setNSNullToNil(id value, Class target){
     else {
         result(FlutterMethodNotImplemented);
     }
+}
+
+#pragma mark Event Channel
+
+- (FlutterError* _Nullable)onListenWithArguments:(id _Nullable)arguments
+                                       eventSink:(FlutterEventSink)events {
+    self.eventSink = events;
+    for (id event in self.eventCache) {
+        events(event);
+    }
+    [self.eventCache removeAllObjects];
+    return nil;
+}
+
+- (FlutterError* _Nullable)onCancelWithArguments:(id _Nullable)arguments {
+    return nil;
+}
+
+- (void)onABTestSuccess:(NSNotification *)noti {
+    [self sendEvent:@"onABTestSuccess"];
+}
+
+- (void)onABTestVidsChanged:(NSNotification *)noti {
+    [self sendEvent:@"onABTestVidsChanged"];
+}
+
+- (void)sendEvent:(id _Nullable)event {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.eventSink) {
+            self.eventSink(event);
+        } else {
+            [self.eventCache addObject:event];
+        }
+    });
 }
 
 @end
