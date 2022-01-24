@@ -84,22 +84,19 @@ class DataObserverManager {
 
         @Override
         public void onIdLoaded(String s, String s1, String s2) {
-            sendEvent("onIdLoaded");
         }
 
         @Override
         public void onRemoteIdGet(boolean b, String s, String s1, String s2, String s3, String s4, String s5) {
-            sendEvent("onABTestSuccess");
         }
 
         @Override
         public void onRemoteConfigGet(boolean b, JSONObject jsonObject) {
-            sendEvent("onRemoteConfigGet");
         }
 
         @Override
         public void onRemoteAbConfigGet(boolean b, JSONObject jsonObject) {
-            sendEvent("onRemoteAbConfigGet");
+            sendEvent("onABTestSuccess");
         }
 
         @Override
