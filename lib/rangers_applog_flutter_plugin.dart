@@ -124,10 +124,15 @@ class RangersApplogFlutterPlugin {
     _channel.invokeMethod('profileAppend', {'profileDict': profileDict});
   }
 
+  /// Sets up a broadcast stream for receiving ABTestConfig events.
+  /// May receive multiple events.
+  /// You can get the latest ABTestConfig by [getABTestConfigValueForKey].
   static Stream<void> receiveABTestConfigStream() {
     return DataObserverManager.receiveABTestConfigStream();
   }
 
+  /// Sets up a broadcast stream for receiving ABVidsChange events.
+  /// Triggered when ABTest is exposed
   static Stream<void> receiveABVidsChangeStream() {
     return DataObserverManager.receiveABVidsChangeStream();
   }

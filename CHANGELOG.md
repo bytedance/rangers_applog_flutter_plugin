@@ -1,3 +1,8 @@
+## 1.3.0
+* iOS & Android: add support of the following method(s):
+  * receiveABTestConfigStream
+  * receiveABVidsChangeStream
+
 ## 1.2.2
 * iOS: Compatible with "use framwork!"
 

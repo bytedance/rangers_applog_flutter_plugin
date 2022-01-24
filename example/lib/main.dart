@@ -26,12 +26,15 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _initAppLog() async {
     try {
-      RangersApplogFlutterPlugin.initRangersAppLog(
-          "189693", "local_test", true, true, true, null);
+      RangersApplogFlutterPlugin.initRangersAppLog("189693", "local_test", true, true, true, null);
+      // The ABTest may not be up to date here
+      _getABTestConfigValueForKey();
       RangersApplogFlutterPlugin.receiveABTestConfigStream().listen((event) {
         setState(() {
           _listen_text = "receiveABTestConfigStream";
         });
+        // You can get the latest ABTest here
+        _getABTestConfigValueForKey();
       });
       RangersApplogFlutterPlugin.receiveABVidsChangeStream().listen((event) {
         setState(() {
