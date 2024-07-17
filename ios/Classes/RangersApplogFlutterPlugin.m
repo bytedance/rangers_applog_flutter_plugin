@@ -98,7 +98,7 @@ static inline id setNSNullToNil(id value, Class target){
     else if ([methodName isEqualToString:@"onEventV3"]) {
         // NSLog(@"%@", call.arguments);
         NSString *event = setNSNullToNil([arguments valueForKey:@"event"], [NSString class]);
-        NSDictionary *param = [arguments valueForKey:@"param"];
+        NSDictionary *param = setNSNullToNil([arguments valueForKey:@"param"], [NSDictionary class]);
         BOOL ret = [[BDAutoTrack sharedTrack] eventV3:event params:param];
         result(nil);
     }
